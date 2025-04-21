@@ -48,7 +48,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
             name="email"
             render={({ field: { onChange, onBlur, value } }) => (
               <>
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-primary">Email</Label>
                 <Input
                   id="email"
                   placeholder="name@example.com"
@@ -67,7 +67,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
           />
         </View>
 
-        <View className="space-y-2">
+        <View className="space-y-2 ">
           <Controller
             control={control}
             name="password"
@@ -98,7 +98,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
           />
         </View>
 
-        <View className="flex flex-row items-center justify-between">
+        <View className="flex flex-row items-center justify-between mt-2">
           <Controller
             control={control}
             name="rememberMe"
