@@ -5,8 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
 import RootNavigator from '@/modules/RootNavigator';
 import toastConfig from '@/shared/config/toast.config';
-import { View, Text } from 'react-native';
-import { Button } from '@/shared/components/ui/button';
+
 
 // Enable screens for better navigation performance
 enableScreens();
