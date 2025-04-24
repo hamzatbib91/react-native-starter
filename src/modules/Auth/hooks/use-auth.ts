@@ -3,10 +3,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AUTH_TOKEN, REFRESH_TOKEN, TOKEN_TYPE, USER_DATA } from '@/shared/constants';
 import { useNavigation } from '@react-navigation/native';
 import { AuthRepository } from '@/modules/Auth/repositories/auth-repository';
+import { Auth, LoginProps, AuthResponse } from '@/modules/Auth/types/auth.types';
 
 export function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<Auth | null>(null);
   const navigation = useNavigation();
 
   // Memoize repository instance so it isn’t recreated every render
@@ -15,15 +16,15 @@ export function useAuth() {
   /**
    * Store tokens and user data in AsyncStorage
    */
-  const storeTokens = async (data) => {
-    if (!data?.token) {
+  const storeTokens = async (data: AuthResponse) => {
+    if (!data?.access_token) {
       throw new Error('No access token received');
     }
     try {
       await AsyncStorage.multiSet([
-        [AUTH_TOKEN, data.token],
-        [REFRESH_TOKEN, data.token], // Consider if refresh token should be different from access token
-        [TOKEN_TYPE, 'Bearer'],
+        [AUTH_TOKEN, data.access_token],
+        [REFRESH_TOKEN, data.access_token], // Consider if refresh token should be different from access token
+        [TOKEN_TYPE, data.token_type],
         [USER_DATA, JSON.stringify(data.user)]
       ]);
       setUser(data.user);
@@ -36,14 +37,12 @@ export function useAuth() {
   /**
    * Login function
    */
-  const login = useCallback(async (email, password) => {
+  const login = useCallback(async (email: string, password: string): Promise<AuthResponse> => {
     try {
       const response = await authRepository.login({ email, password });
       if (!response) {
         throw new Error('Invalid response from server');
       }
-
-      console.log('hamza response:', response); 
       await storeTokens(response);
       setIsAuthenticated(true);
       return response;
@@ -65,7 +64,7 @@ export function useAuth() {
       await AsyncStorage.multiRemove([AUTH_TOKEN, REFRESH_TOKEN, TOKEN_TYPE, USER_DATA]);
       setIsAuthenticated(false);
       setUser(null);
-      navigation.navigate('Login');
+      navigation.navigate('Auth', { screen: 'Login' });
     }
   }, [authRepository, navigation]);
 

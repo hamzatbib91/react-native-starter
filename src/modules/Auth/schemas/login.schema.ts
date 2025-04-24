@@ -1,14 +1,15 @@
 import { z } from 'zod';
+import { t } from 'i18next';
 
 export const loginSchema = z.object({
   email: z
     .string()
-    .min(1, { message: 'Email is required' })
-    .email({ message: 'Must be a valid email address' }),
+    .min(1, { message: t('login.error.emailRequired') })
+    .email({ message: t('login.error.emailInvalid') }),
   password: z
     .string()
-    .min(1, { message: 'Password is required' })
-    .min(8, { message: 'Password must be at least 8 characters' }),
+    .min(1, { message: t('login.error.passwordRequired') })
+    .min(8, { message: t('login.error.passwordMinLength') }),
   rememberMe: z.boolean().optional().default(false),
 });
 

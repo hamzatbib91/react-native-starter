@@ -7,6 +7,7 @@
 export const AUTH_ENDPOINTS = {
   LOGIN: '/api/login', // POST
   LOGOUT: '/api/logout', // POST
-  test: '/api/logout/{id}', // POST
+  REFRESH: '/api/refresh', // POST
+  ME: '/api/me', // GET
 };
 
