@@ -33,10 +33,10 @@ Accordion.displayName = AccordionPrimitive.Root.displayName;
 const AccordionItem = React.forwardRef<AccordionPrimitive.ItemRef, AccordionPrimitive.ItemProps>(
   ({ className, value, ...props }, ref) => {
     return (
-      <Animated.View className={'overflow-hidden'} layout={LinearTransition.duration(200)}>
+      <Animated.View className={cn('overflow-hidden bg-background', className)} layout={LinearTransition.duration(200)}>
         <AccordionPrimitive.Item
           ref={ref}
-          className={cn('border-b border-border', className)}
+          className={cn('border-b border-border bg-background', className)}
           value={value}
           {...props}
         />
@@ -64,15 +64,15 @@ const AccordionTrigger = React.forwardRef<
 
   return (
     <TextClassContext.Provider value='native:text-lg font-medium web:group-hover:underline'>
-      <AccordionPrimitive.Header className='flex'>
+      <AccordionPrimitive.Header className='flex bg-background'>
         <AccordionPrimitive.Trigger ref={ref} {...props} asChild>
           <Trigger
             className={cn(
-              'flex flex-row web:flex-1 items-center justify-between py-4 web:transition-all group web:focus-visible:outline-none web:focus-visible:ring-1 web:focus-visible:ring-muted-foreground',
+              'flex flex-row web:flex-1 items-center justify-between py-4 web:transition-all group web:focus-visible:outline-none web:focus-visible:ring-1 web:focus-visible:ring-muted-foreground bg-background text-foreground',
               className
             )}
           >
-            <>{children}</>
+                        <>{children}</>
             <Animated.View style={chevronStyle}>
               <ChevronDown size={18} className={'text-foreground shrink-0'} />
             </Animated.View>
@@ -93,7 +93,7 @@ const AccordionContent = React.forwardRef<
     <TextClassContext.Provider value='native:text-lg'>
       <AccordionPrimitive.Content
         className={cn(
-          'overflow-hidden text-sm web:transition-all',
+          'overflow-hidden text-sm web:transition-all bg-background text-foreground',
           isExpanded ? 'web:animate-accordion-down' : 'web:animate-accordion-up'
         )}
         ref={ref}
@@ -107,7 +107,7 @@ const AccordionContent = React.forwardRef<
 
 function InnerContent({ children, className }: { children: React.ReactNode; className?: string }) {
   if (Platform.OS === 'web') {
-    return <View className={cn('pb-4', className)}>{children}</View>;
+    return <View className={cn('pb-4 text-foreground bg-background', className)}>{children}</View>;
   }
   return (
     <Animated.View
