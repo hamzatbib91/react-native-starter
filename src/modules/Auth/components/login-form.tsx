@@ -11,6 +11,7 @@ import { Checkbox } from '@/shared/components/ui/checkbox';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/use-auth';
 import { showToast } from '@/shared/lib/toast';
+import { APP_NAME } from '@/shared/constants';
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -72,7 +73,7 @@ export function LoginForm() {
               resizeMode="contain"
             />
             <Text className="text-2xl font-bold text-foreground text-center mt-4">
-              EdOffice
+              {APP_NAME}
             </Text>
             <Text className="text-sm text-muted-foreground text-center mt-1">
               {t('login.title')}

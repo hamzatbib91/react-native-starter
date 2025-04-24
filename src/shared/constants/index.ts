@@ -11,6 +11,12 @@ export const BACKEND_API_URL = "http://192.168.1.15:8000/";
 export const MODE_ENV = "development";
 
 /**
+ * App name
+ * @constant
+ */
+export const APP_NAME = "React Native Starter";
+
+/**
  * Local storage keys
  * @constant
  */
