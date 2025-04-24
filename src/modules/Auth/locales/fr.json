@@ -1,0 +1,27 @@
+{
+    "login": {
+      "title": "Connectez-vous à votre compte",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "rememberMe": "Se souvenir de moi",
+    "forgotPassword": "Mot de passe oublié ?",
+    "signIn": "Se connecter",
+    "hide": "Masquer",
+    "show": "Afficher",
+    "or": "OU",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "createAccount": "Créer un compte",
+    "emailPlaceholder": "votre@email.com",
+    "passwordPlaceholder": "••••••••",
+    "success": "Connexion réussie !",
+
+    "error": {
+      "emailRequired": "L'e-mail est requis",
+      "emailInvalid": "L'adresse e-mail doit être valide",
+      "passwordRequired": "Le mot de passe est requis",
+      "passwordMinLength": "Le mot de passe doit comporter au moins 8 caractères",
+      "generic": "Échec de la connexion. Veuillez réessayer."
+
+    }
+  }
+}

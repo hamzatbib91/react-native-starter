@@ -1,0 +1,25 @@
+{
+  "login": {
+    "title": "Sign in to your account",
+    "email": "Email",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "signIn": "Sign in",
+    "hide": "Hide",
+    "show": "Show",
+    "or": "OR",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create account",
+    "emailPlaceholder": "your@email.com",
+    "passwordPlaceholder": "••••••••",
+    "success": "Login successful!",
+    "error": {
+      "generic": "Login failed. Please try again.",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Must be a valid email address",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Password must be at least 8 characters"
+    }
+  }
+}
