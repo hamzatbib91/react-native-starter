@@ -1,4 +1,5 @@
 import React from 'react';
+import '@/plugin/i18n';
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
