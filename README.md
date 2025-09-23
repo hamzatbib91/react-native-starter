@@ -152,4 +152,4 @@ MODE_ENV=development
 ---
 
 ## 📜 License
-MIT © Ed Trust
+MIT © HAMZA TBIB
