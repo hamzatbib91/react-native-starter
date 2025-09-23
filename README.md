@@ -1,97 +1,155 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# reactnativestarter – React Native App
 
-# Getting Started
+> A modern, fully-typed React Native (CLI) application for the Ed Trust organisation. It implements a feature-based architecture, NativeWind styling, React Navigation, React Query, and many other best-in-class libraries.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## 📦 Project Structure
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+```
+├── App.tsx                # Root entry – registers providers & navigation
+├── src/
+│   ├── assets/            # Images, fonts, lottie, etc.
+│   ├── modules/           # ✨ Feature folders (Auth, Dashboard, Document …)
+│   │   └── <Feature>/
+│   │       ├── components/    # UI parts scoped to feature
+│   │       ├── constants/     # Feature-specific constants
+│   │       ├── context/       # React Context providers
+│   │       ├── hooks/         # Custom hooks (feature only)
+│   │       ├── locales/       # i18n namespaces (JSON)
+│   │       ├── navigation.tsx # Stack/Tab config for feature
+│   │       ├── repositories/  # API / persistence layer (Repository pattern)
+│   │       ├── schemas/       # Zod validation schemas
+│   │       ├── screens/       # React Navigation screens
+│   │       └── types/         # TS models for the feature
+│   ├── shared/            # Cross-cutting, reusable code
+│   │   ├── components/    # Design-system & generic components
+│   │   ├── config/        # axios, toast & other singletons
+│   │   ├── constants/     # Global constants & enums
+│   │   ├── lib/           # Utilities (icons, helpers, …)
+│   │   ├── locales/       # Common i18n strings
+│   │   ├── queries/       # React-Query hooks / keys
+│   │   └── types/         # Global TS declarations
+│   └── plugin/            # NativeWind / Tailwind plugin support
+└── android/ | ios/        # Native projects
+```
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### Architectural Patterns
+- **Feature-based & Clean Architecture** – each module contains its own UI, state & data layer.
+- **Repository Pattern** – abstracts API/network logic away from UI and hooks.
+- **Design-System Layer** – shared components exported from `shared/components` ensure visual and behavioural consistency.
 
-```sh
-# Using npm
+---
+
+## 🧑‍💻 Coding Conventions
+
+| Topic | Convention |
+|-------|------------|
+| File/folder names | `kebab-case` (`tax-status-card.tsx`)
+| Components       | `PascalCase` (`TaxStatusCard`)
+| Functions & vars | `camelCase` (`getUser`, `isLoading`)
+| Types/Interfaces | `PascalCase`, often prefixed with domain (`AuthResponse`)
+| Component style  | Functional components + React Hooks; no class components
+| Props typing     | Explicit interfaces; `React.FC` only when children typing needed
+| Styling          | **NativeWind/Tailwind** class strings + `cn()` util for conditional merge
+| Barrel exports   | `index.ts` re-exports inside most folders for short imports
+| Folder order in feature | constants → context → hooks → components → screens (top-down dependency rule)
+
+### Reusable Utilities
+- `src/shared/lib/utils.ts` → `cn`, `formatErrorApi`, `isTextChildren` helpers.
+- Hooks start with **use*** and live next to their feature or in `shared/hooks`.
+
+---
+
+## 🔐 Rules & Best Practices
+
+| Concern | Guideline |
+|---------|-----------|
+| State management | Context Providers per feature (e.g. `AuthProvider`) + **@tanstack/react-query** for server state caching.
+| API requests     | Centralised **Axios** singleton (`shared/config/api-client.ts`) with token injection & FormData detection.
+| Navigation       | React Navigation v7. Each module exposes its own navigator, wired in `root-navigator.tsx`. Route names enumerated in `shared/constants/route-name.ts`.
+| Reusability      | UI atoms/molecules live in `shared/components`; variants with **class-variance-authority**.
+| Animations       | **react-native-reanimated** & layout animations.
+| Testing          | Jest + React Test Renderer. Write tests for hooks, utils, and critical UI.
+| Accessibility    | Provide `accessibilityLabel` and proper roles for interactive elements.
+| Git/Commits      | Conventional Commits (`feat:`, `fix:`, `docs:`) & `npm run lint` pre-push.
+
+---
+
+## 🧰 Main Packages & Why
+
+| Package | Reason |
+|---------|--------|
+| `react-native@0.79` | Core mobile runtime |
+| `@react-navigation/*` | Declarative navigation (stack, tab, drawer) |
+| `nativewind` / `tailwindcss` | Utility-first styling with HSL token theme (`tailwind.config.js`) |
+| `react-native-reanimated` | 60 fps gesture & transition animations |
+| `@tanstack/react-query` | Declarative async caching & mutations |
+| `axios` | Promise-based HTTP client (wrapped) |
+| `react-hook-form` + `zod` | Performant forms + schema validation |
+| `@react-native-async-storage/async-storage` | Persistent storage (tokens, cache) |
+| `react-native-toast-message` | Cross-platform toast notifications |
+| `lucide-react-native` / `react-native-vector-icons` | Icon set |
+| `@rn-primitives/*` | Headless UI primitives (accordion, dialog, menu …) |
+| `jest` | Unit testing harness |
+
+Custom wrappers:
+- **`shared/config/api-client.ts`** – Axios instance with interceptors & global error handling.
+- **`shared/lib/toast.ts`** – Typed toast helper for consistent UX.
+
+---
+
+## 🚀 Setup & Development
+
+```bash
+# 1. Install dependencies
+npm install        # or yarn
+
+# 2. (Optional) Generate NativeWind types for autocompletion
+npx nativewind
+
+# 3. Start Metro Bundler
 npm start
 
-# OR using Yarn
-yarn start
+# 4. Run the app
+npm run android    # Android
+a) ensure emulator or device is connected
+
+npm run ios        # iOS
+b) first-time iOS: bundle install && bundle exec pod install
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+### Environment Variables
+Create a `.env` (or inject via build pipeline) mirroring the keys in `src/shared/constants/index.ts`:
+```
+BACKEND_API_URL=https://your.api/
+MODE_ENV=development
 ```
 
-### iOS
+### Build & Release
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+| Platform | Steps |
+|----------|-------|
+| **Android** | 1) Create/sign keystore 2) `cd android && ./gradlew assembleRelease` 3) APK/AAB in `android/app/build/outputs` |
+| **iOS**     | Open `ios/reactnativestarter.xcworkspace` in Xcode, set provisioning profile, `Product ▸ Archive`, then distribute |
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+---
 
-```sh
-bundle install
-```
+## 🎨 UI Design Highlights
+- HSL colour tokens defined in `tailwind.config.js` (`primary`, `background`, `foreground` …).
+- Rounded corners, soft shadows, subtle gradients for modern aesthetic.
+- Card-based login screen with top/bottom gradient ornaments and AnimatedView transitions.
 
-Then, and every time you update your native dependencies, run:
+---
 
-```sh
-bundle exec pod install
-```
+## 🤝 Contributing
+1. Fork & clone repo.
+2. Create a branch: `git checkout -b feat/your-feature`.
+3. Follow coding conventions & add tests.
+4. Run `npm run lint` and ensure no ESLint errors.
+5. Create a Pull Request with clear description.
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+---
 
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## 📜 License
+MIT © Ed Trust
