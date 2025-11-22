@@ -81,9 +81,9 @@ android {
     buildToolsVersion = rootProject.ext.buildToolsVersion
     compileSdk = rootProject.ext.compileSdkVersion
 
-    namespace "com.edofficemobile"
+    namespace "com.yourcompany.escooly"
     defaultConfig {
-        applicationId "com.edofficemobile"
+        applicationId "com.yourcompany.escooly"
         minSdk = rootProject.ext.minSdkVersion
         targetSdk = rootProject.ext.targetSdkVersion
         versionCode 1

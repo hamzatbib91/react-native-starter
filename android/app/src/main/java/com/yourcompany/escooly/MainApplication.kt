@@ -1,4 +1,4 @@
-package com.edofficemobile
+package com.yourcompany.escooly
 
 import android.app.Application
 import com.facebook.react.PackageList
