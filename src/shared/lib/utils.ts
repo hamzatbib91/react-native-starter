@@ -1,5 +1,5 @@
 /**
- * Shared utility functions for EdOfficeMobile.
+ * Shared utility functions for escooly.
  *
  * Includes class name merging, text child detection, and API error formatting helpers.
  * All utilities are typed and designed for use in a modern React Native/TypeScript codebase.

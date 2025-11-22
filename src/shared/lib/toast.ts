@@ -1,5 +1,5 @@
 /**
- * Toast utility for showing success, error, and info notifications in EdOfficeMobile.
+ * Toast utility for showing success, error, and info notifications in escooly.
  *
  * Uses react-native-toast-message under the hood, and applies a consistent, modern UI style.
  *
@@ -42,7 +42,7 @@ function show(type: ToastType, message: string, description = '', options?: Part
 }
 
 /**
- * Toast notification API for EdOfficeMobile.
+ * Toast notification API for escooly.
  *
  * Usage:
  *   showToast.success('Title', 'Optional description');
